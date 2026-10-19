@@ -114,9 +114,10 @@ export function HomePage() {
         </h2>
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
           gap: 16
-        }}>
+        }}
+        className="stats-grid">
           <Link to="/people" style={{ textDecoration: 'none', color: 'inherit' }}>
             <StatCard icon="👥" label="Friends (Manage)" value={stats.people} color="blue" />
           </Link>

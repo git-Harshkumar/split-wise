@@ -430,37 +430,98 @@ input, select, textarea {
   box-shadow: 0 0 0 3px var(--color-blue-bg), var(--shadow-offset);
 }
 
+/* ===========================
+   RESPONSIVE LAYOUT
+   =========================== */
+
+/* Mobile: show hamburger, hide sidebar margin */
 @media (max-width: 768px) {
   :root {
-    --sidebar-width: 100%;
-    --header-height: 64px;
+    --sidebar-width: 0px;
+    --header-height: 60px;
+  }
+
+  /* Show hamburger button */
+  #mobile-menu-btn {
+    display: flex !important;
+    font-size: 20px;
+    padding: 8px 10px;
+  }
+
+  /* Hide desktop header nav links */
+  header nav {
+    display: none !important;
+  }
+
+  /* Hide user email text in header on mobile */
+  header > div > div:last-child span {
+    display: none;
+  }
+
+  /* Main content: no sidebar offset */
+  main {
+    margin-left: 0 !important;
+    padding: 16px 12px 80px !important; /* bottom padding for mobile nav */
   }
 
   .container {
-    padding: 0 12px;
+    padding: 0;
   }
 
-  .btn {
-    padding: 14px 20px;
+  /* Modals */
+  .modal-overlay {
+    align-items: flex-end;
+    padding: 0;
   }
 
   .modal {
-    margin: 12px;
-    max-height: calc(100vh - 24px);
+    max-width: 100%;
+    width: 100%;
+    max-height: 92vh;
+    border-radius: 16px 16px 0 0;
+    border-bottom: none;
   }
 
+  /* Toasts */
   .toast-container {
     left: 12px;
     right: 12px;
-    bottom: 12px;
+    bottom: 72px;
   }
 
   .toast {
     min-width: auto;
     max-width: none;
   }
+
+  /* Cards: full-width on mobile */
+  .card {
+    padding: 16px;
+  }
+
+  /* Buttons: slightly larger tap targets */
+  .btn {
+    padding: 12px 18px;
+  }
+
+  /* Stat grids: 2 columns on mobile */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Hide modal footer border, make buttons full-width */
+  .modal-footer {
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+
+  .modal-footer .btn {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
+/* Small phones */
 @media (max-width: 480px) {
   html {
     font-size: 15px;
@@ -468,5 +529,80 @@ input, select, textarea {
 
   .modal-header, .modal-body, .modal-footer {
     padding: 16px;
+  }
+
+  /* Single column stat cards on very small screens */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Page headings smaller */
+  h1 { font-size: 20px !important; }
+  h2 { font-size: 17px !important; }
+}
+
+/* ===========================
+   MOBILE BOTTOM NAV BAR
+   =========================== */
+.mobile-bottom-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 60;
+    background: var(--color-white);
+    border-top: var(--border-width) solid var(--color-border);
+    box-shadow: 0 -4px 0 0 var(--color-border);
+    height: 64px;
+    align-items: stretch;
+  }
+
+  .mobile-bottom-nav a {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    padding: 4px 2px;
+    border-right: 2px solid var(--color-border);
+    transition: background var(--transition-fast);
+  }
+
+  .mobile-bottom-nav a:last-child {
+    border-right: none;
+  }
+
+  .mobile-bottom-nav a.active {
+    background: var(--color-blue-bg);
+    color: var(--color-blue);
+  }
+
+  .mobile-bottom-nav a:active {
+    background: var(--color-bg-alt);
+  }
+
+  .mobile-bottom-nav .nav-icon {
+    font-size: 20px;
+    line-height: 1;
+  }
+}
+
+/* ===========================
+   DESKTOP: sidebar always visible
+   =========================== */
+@media (min-width: 769px) {
+  .mobile-bottom-nav {
+    display: none;
   }
 }
