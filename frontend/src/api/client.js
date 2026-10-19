@@ -52,9 +52,11 @@ async function request(endpoint, options = {}) {
   return data;
 }
 
+const ensureArray = (data) => (Array.isArray(data) ? data : []);
+
 export const api = {
   people: {
-    list: () => request('/people'),
+    list: () => request('/people').then(ensureArray),
     create: (name, idempotencyKey) => request('/people', {
       method: 'POST',
       body: JSON.stringify({ name }),
@@ -63,7 +65,7 @@ export const api = {
     delete: (id) => request(`/people/${id}`, { method: 'DELETE' })
   },
   groups: {
-    list: () => request('/groups'),
+    list: () => request('/groups').then(ensureArray),
     create: (data, idempotencyKey) => request('/groups', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -76,7 +78,7 @@ export const api = {
     delete: (id) => request(`/groups/${id}`, { method: 'DELETE' })
   },
   expenses: {
-    list: (groupId) => request(`/expenses${groupId ? `?groupId=${groupId}` : ''}`),
+    list: (groupId) => request(`/expenses${groupId ? `?groupId=${groupId}` : ''}`).then(ensureArray),
     create: (data, idempotencyKey) => request('/expenses', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -85,7 +87,7 @@ export const api = {
     delete: (id) => request(`/expenses/${id}`, { method: 'DELETE' })
   },
   settlements: {
-    list: () => request('/settlements'),
+    list: () => request('/settlements').then(ensureArray),
     create: (data, idempotencyKey) => request('/settlements', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -94,11 +96,11 @@ export const api = {
     delete: (id) => request(`/settlements/${id}`, { method: 'DELETE' })
   },
   balances: {
-    list: () => request('/balances'),
-    simplified: () => request('/balances/simplified'),
-    whoPaidWhat: () => request('/balances/who-paid-what'),
-    tripInvestment: (groupId) => request(`/balances/trip-investment${groupId ? `?groupId=${groupId}` : ''}`),
-    whatEachSpent: (groupId) => request(`/balances/what-each-spent${groupId ? `?groupId=${groupId}` : ''}`)
+    list: () => request('/balances').then(ensureArray),
+    simplified: () => request('/balances/simplified').then(ensureArray),
+    whoPaidWhat: () => request('/balances/who-paid-what').then(ensureArray),
+    tripInvestment: (groupId) => request(`/balances/trip-investment${groupId ? `?groupId=${groupId}` : ''}`).then(ensureArray),
+    whatEachSpent: (groupId) => request(`/balances/what-each-spent${groupId ? `?groupId=${groupId}` : ''}`).then(ensureArray)
   },
   settings: {
     getProfile: () => request('/settings/profile'),
